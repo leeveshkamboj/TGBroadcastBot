@@ -153,7 +153,7 @@ async def handler(event):
                 if previous_message.photo:
                     photo = previous_message.media.photo
                     await bot.send_file(channel.chat_id, photo, caption = previous_message.text, link_preview = False)
-                elif previous_message.media and not previous_message.media.webpage::
+                elif previous_message.media and not previous_message.media.webpage:
                     media = previous_message.media.document
                     await bot.send_file(channel.chat_id, media, caption = previous_message.text, link_preview = False)
                 else:
