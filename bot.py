@@ -8,7 +8,7 @@ import re
 
 bot = TelegramClient('bot', Config.api_id, Config.api_hash).start(bot_token=Config.token)
 
-default_start_msg = """To use this bot, add the bot in your channel aur send .add"""
+default_start_msg = """To use this bot, add the bot in your channel aur send /add"""
 
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/start'))
@@ -33,13 +33,13 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/help'))
 async def handler(event):
-    msg = "**Commands available-**\n\n`.add` - Add channel to database\n`.rem` - Remove channel from database"
+    msg = "**Commands available-**\n\n`/add` - Add channel to database\n`.rem` - Remove channel from database"
     if event.chat_id == Config.ownerID:
         msg += "\n/send - Reply /send to any message to send it to all channels\n/list - to list all channels in database\n/clean - to clean database"
     await bot.send_message(event.chat_id, msg)
 
 
-@bot.on(events.NewMessage(func = lambda e: e.is_channel, pattern = r'.add'))
+@bot.on(events.NewMessage(func = lambda e: e.is_channel, pattern = r'/add'))
 async def handler(event):
     if in_channels(event.chat_id):
         try:
