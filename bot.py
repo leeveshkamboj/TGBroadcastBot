@@ -152,12 +152,12 @@ async def handler(event):
             try:
                 if previous_message.photo:
                     photo = previous_message.media.photo
-                    await bot.send_file(channel.chat_id, photo, caption = previous_message.text)
-                elif previous_message.media:
+                    await bot.send_file(channel.chat_id, photo, caption = previous_message.text, link_preview = False)
+                elif previous_message.media and not previous_message.media.webpage::
                     media = previous_message.media.document
-                    await bot.send_file(channel.chat_id, media, caption = previous_message.text)
+                    await bot.send_file(channel.chat_id, media, caption = previous_message.text, link_preview = False)
                 else:
-                    await bot.send_message(channel.chat_id, previous_message.text)
+                    await bot.send_message(channel.chat_id, previous_message.text, link_preview = False)
                 count += 1
                 percents = round(100.0 * count / float(len(channels)), 1)
                 try:
