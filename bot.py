@@ -23,9 +23,9 @@ async def handler(event):
     msg = f"**Yo {first_name}**\n\n{start_msg}\n\nEnter /help for more commands"
     try:
         owner = await bot.get_entity(Config.ownerID)
-        username = owner.username
-        if username:
-            msg += f"\n\n**Made By @{username}**"
+        name = owner.name
+        if name:
+            msg += f"\n\n**Made By {name}**"
     except Exception as e:
         print(e)
     await bot.send_message(event.chat_id, msg, buttons = button)
