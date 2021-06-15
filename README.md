@@ -10,4 +10,4 @@ A Telethon and Postgres based Telgram Bot for broadcasting to mutiple channels.
 
 # Contact
 
-Telegram username - [@HeisenbergTheDanger](tg://user?id=630654925)
+Telegram username - @HeisenbergTheDanger
