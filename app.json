@@ -1,0 +1,46 @@
+{
+    "name": "TGBroadcastBot",
+    "description": "Bot for broadcasting a msg to mutiple channels",
+    "keywords": [
+      "telegram",
+      "bot",
+      "modular",
+      "productivity"
+    ],
+    "repository": "https://github.com/leeveshkamboj/TGBroadcastBot",
+    "env": {
+      "APP_ID": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      },
+      "API_HASH": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+        },
+      "TOKEN": {
+        "description": "Obtain a Telegram bot token by contacting @BotFather",
+        "value": ""
+      },
+      "OWNER_ID": {
+        "description": "ID of owner. You can get it from @userinfobot"
+      },
+      "LOG_ID": {
+        "description": "ID of log group.",
+        "required": false
+      },
+      "START_MSG": {
+        "description": "Custom start message.",
+        "required": false
+      }
+    },
+    "addons": [{
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }]
+  }

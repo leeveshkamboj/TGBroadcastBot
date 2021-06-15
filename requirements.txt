@@ -1,0 +1,4 @@
+telethon
+sqlalchemy
+psycopg2
+asyncio
