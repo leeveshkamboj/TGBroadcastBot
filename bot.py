@@ -150,12 +150,18 @@ async def handler(event):
         errs = 0
         for channel in channels:
             try:
+                if event.poll:
+                    return
                 if previous_message.photo:
                     photo = previous_message.media.photo
                     await bot.send_file(channel.chat_id, photo, caption = previous_message.text, link_preview = False)
-                elif previous_message.media and not previous_message.web_preview:
-                    media = previous_message.media.document
-                    await bot.send_file(channel.chat_id, media, caption = previous_message.text, link_preview = False)
+                elif previous_message.media:
+                    try:
+                        if event.media.webpage:
+                            await bot.send_message(channel.chat_id, previous_message.text, link_preview = False)
+                    except:
+                        media = previous_message.media.document
+                        await bot.send_file(channel.chat_id, media, caption = previous_message.text, link_preview = False)
                 else:
                     await bot.send_message(channel.chat_id, previous_message.text, link_preview = False)
                 count += 1
