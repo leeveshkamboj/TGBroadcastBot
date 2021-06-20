@@ -178,6 +178,7 @@ async def handler(event):
 
 @bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
 async def genAcc(event):
+    await event.answer()
     ID = event.data_match.group(1).decode("UTF-8")
     if in_channels(ID):
         rm_channel(ID)
