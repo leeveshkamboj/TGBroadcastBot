@@ -86,6 +86,9 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/list'))
 async def handler(event):
+    if event.chat_id != Config.ownerID:
+        await bot.send_message(event.chat_id, "You are not my Owners.")
+        return
     channels = get_all_channels()
     if channels:
         msg = f"Total {len(channels)} channels=>\n\n"
@@ -124,6 +127,9 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/clean'))
 async def handler(event):
+    if event.chat_id != Config.ownerID:
+        await bot.send_message(event.chat_id, "You are not my Owners.")
+        return
     msg = await bot.send_message(event.chat_id, "Cleaning...")
     channels = get_all_channels()
     for channel in channels:
