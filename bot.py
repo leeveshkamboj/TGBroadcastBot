@@ -4,6 +4,7 @@ from sqlhelper.channels import add_channel, rm_channel, in_channels, get_all_cha
 from config import Config
 import asyncio
 import re
+import io
 
 
 bot = TelegramClient('bot', Config.api_id, Config.api_hash).start(bot_token=Config.token)
