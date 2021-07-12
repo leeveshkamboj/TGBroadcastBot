@@ -90,6 +90,7 @@ async def handler(event):
     if event.chat_id not in Config.ownerID:
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
+    listMsg = await bot.send_message(event.chat_id, "Getting all channels...")
     channels = get_all_channels()
     if channels:
         msg = f"Total {len(channels)} channels=>\n\n"
@@ -115,6 +116,7 @@ async def handler(event):
     if len(msg) > 4096:
         with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "channels.txt"
+            await listMsg.delete()
             await bot.send_file(
                 event.chat_id,
                 out_file,
@@ -123,7 +125,7 @@ async def handler(event):
                 caption="List of Channels."
             )
     else:
-        await bot.send_message(event.chat_id, msg, link_preview = False)
+        await listMsg.edit(msg, link_preview = False)
 
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/clean'))
