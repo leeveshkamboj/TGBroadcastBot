@@ -23,7 +23,7 @@ async def handler(event):
         start_msg = default_start_msg
     msg = f"**Yo {first_name}**\n\n{start_msg}\n\nEnter /help for more commands"
     try:
-        owner = await bot.get_entity(Config.ownerID)
+        owner = await bot.get_entity(Config.ownerID[0])
         name = owner.first_name
         if name:
             msg += f"\n\n**Made By {name}**"
@@ -35,7 +35,7 @@ async def handler(event):
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/help'))
 async def handler(event):
     msg = "**Commands available-**\n\n/add - Add channel to database\n/rem - Remove channel from database"
-    if event.chat_id == Config.ownerID:
+    if event.chat_id in Config.ownerID:
         msg += "\n/send - Reply /send to any message to send it to all channels\n/list - to list all channels in database\n/clean - to clean database"
     await bot.send_message(event.chat_id, msg)
 
@@ -66,7 +66,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern = (r'/rem(.*)')))
 async def handler(event):
-    if event.chat_id == Config.ownerID:
+    if event.chat_id in Config.ownerID:
         ID = int(event.pattern_match.group(1))
     elif event.is_channel:
         ID = event.chat_id
@@ -87,7 +87,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/list'))
 async def handler(event):
-    if event.chat_id != Config.ownerID:
+    if event.chat_id not in Config.ownerID:
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
     channels = get_all_channels()
@@ -128,7 +128,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/clean'))
 async def handler(event):
-    if event.chat_id != Config.ownerID:
+    if event.chat_id not in Config.ownerID:
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
     msg = await bot.send_message(event.chat_id, "Cleaning...")
@@ -143,7 +143,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/send'))
 async def handler(event):
-    if event.chat_id != Config.ownerID:
+    if event.chat_id not in Config.ownerID:
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
     if event.reply_to_msg_id:
