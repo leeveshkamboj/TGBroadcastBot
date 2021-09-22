@@ -10,6 +10,6 @@ class Config(object):
     ownerID = os.environ.get("OWNER_ID", [])
     if ownerID:
         try:
-            ownerID = map(int, ownerID.split("|"))
+            ownerID = [int(ID) for ID in ownerID.split("|")]
         except:
             ownerID = []
