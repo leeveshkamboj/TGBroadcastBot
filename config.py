@@ -9,7 +9,4 @@ class Config(object):
     start_msg = os.environ.get("START_MSG", None)
     ownerID = os.environ.get("OWNER_ID", [])
     if ownerID:
-        try:
-            ownerID = [int(ID) for ID in ownerID.split("|")]
-        except:
-            ownerID = []
+        ownerID = [int(ID) for ID in ownerID.split("|")]
