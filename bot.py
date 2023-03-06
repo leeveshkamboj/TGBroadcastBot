@@ -1,6 +1,6 @@
 from telethon.sync import TelegramClient
 from telethon import events, Button, functions
-from sqlhelper.channels import add_channel, rm_channel, in_channels, get_all_channels
+from mongohelper.channels import add_channel, rm_channel, in_channels, get_all_channels
 from config import Config
 import asyncio
 import re
@@ -42,7 +42,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_channel, pattern = r'/add'))
 async def handler(event):
-    if in_channels(event.chat_id):
+    if await in_channels(event.chat_id):
         try:
             reply = await event.reply("Already in database")
             await asyncio.sleep(3)
@@ -51,11 +51,11 @@ async def handler(event):
         except:
             pass
     else:
-        add_channel(event.chat_id)
+        await add_channel(event.chat_id)
         try:
             reply = await event.reply("Added to database")
         except:
-            rm_channel(event.chat_id)
+            await rm_channel(event.chat_id)
         try:
             await asyncio.sleep(3)
             await reply.delete()
@@ -72,8 +72,8 @@ async def handler(event):
         ID = event.chat_id
     else:
         return
-    if in_channels(ID):
-        rm_channel(ID)
+    if await in_channels(ID):
+        await rm_channel(ID)
         try:
             await event.reply("Removed from database")
         except:
@@ -91,7 +91,7 @@ async def handler(event):
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
     listMsg = await bot.send_message(event.chat_id, "Getting all channels...")
-    channels = get_all_channels()
+    channels = await get_all_channels()
     if channels:
         msg = f"Total {len(channels)} channels=>\n\n"
         for channel in channels:
@@ -134,10 +134,10 @@ async def handler(event):
         await bot.send_message(event.chat_id, "You are not my Owners.")
         return
     msg = await bot.send_message(event.chat_id, "Cleaning...")
-    channels = get_all_channels()
+    channels = await get_all_channels()
     for channel in channels:
         try:
-            rm_channel(channel.chat_id)
+            await rm_channel(channel.chat_id)
         except:
             pass
     await msg.edit("Done")
@@ -154,7 +154,7 @@ async def handler(event):
         if previous_message.poll:
             await broadcast_msg.edit("Polls not supported.")
             return
-        channels = get_all_channels()
+        channels = await get_all_channels()
         count = 0
         errs = 0
         for channel in channels:
@@ -195,8 +195,8 @@ async def handler(event):
 async def genAcc(event):
     await event.answer()
     ID = event.data_match.group(1).decode("UTF-8")
-    if in_channels(ID):
-        rm_channel(ID)
+    if await in_channels(ID):
+        await rm_channel(ID)
     await event.delete()
 
 

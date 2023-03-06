@@ -1,6 +1,6 @@
 # TGBroadcastBot
 
-A Telethon and Postgres based Telgram Bot for broadcasting to mutiple channels.
+A Telethon and MongoDB based Telgram Bot for broadcasting to mutiple channels.
 
 
 # Deploy on heroku

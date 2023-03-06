@@ -1,4 +1,7 @@
 telethon
-sqlalchemy
-psycopg2
 asyncio
+pymongo
+motor
+marshmallow
+umongo
+python-dotenv
