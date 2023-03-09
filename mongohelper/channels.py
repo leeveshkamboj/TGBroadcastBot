@@ -50,6 +50,5 @@ async def rm_channel(chat_id):
 
 
 async def get_all_channels():
-    count = await Channel.count_documents()
     cursor = Channel.find()
-    return await cursor.to_list(count)
+    return await cursor.to_list(None)
