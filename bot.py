@@ -155,6 +155,9 @@ async def handler(event):
             await broadcast_msg.edit("Polls not supported.")
             return
         channels = await get_all_channels()
+        if not channels:
+            await broadcast_msg.edit("Database is empty. Please add some channels first!")
+            return
         count = 0
         errs = 0
         for channel in channels:
@@ -194,7 +197,7 @@ async def handler(event):
 @bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"remove_(.*)")))
 async def genAcc(event):
     await event.answer()
-    ID = event.data_match.group(1).decode("UTF-8")
+    ID = int(event.data_match.group(1).decode("UTF-8"))
     if await in_channels(ID):
         await rm_channel(ID)
     await event.delete()
